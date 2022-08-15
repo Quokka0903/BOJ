@@ -1,56 +1,26 @@
-from collections import deque #미완
+from collections import Counter
 import sys
+
 input = sys.stdin.readline
 
 N = int(input())
+arr = []
 
-do_math = deque()
-dict = {}
-
-sum = 0
 for _ in range(N):
-    num = int(input())
-    
-    if do_math:
-        if num > do_math[-1]:
-            do_math.append(num)
-        elif num < do_math[0]:
-            do_math.appendleft(num)
-        else :
-            cnt = 0
-            while do_math and do_math[0] < num:
-                do_math.rotate(-1)
-                cnt += 1
-            do_math.appendleft(num)
-            do_math.rotate(cnt)
-    else :
-        do_math.append(num)
+    arr.append(int(input()))
 
-    sum += num
-    
-    if num not in dict:
-        dict[num] = 1
-    else :
-        dict[num] += 1
+arr.sort()
 
-max_time = 0
-max_num = 0
-for x in range(N):
-    if dict.get(do_math[x]) >= max_time:
-        max_time = dict.get(do_math[x])
-        max_idx = x
+print(round(sum(arr)/N))
+print(arr[N//2])
 
-bindo = 0
-bin_cnt = 0
-for y in range(0, x - 1, 1):
-    if dict.get(do_math[y]) == max_time:
-        bindo = do_math[y]
-        bin_cnt += 1
-    if bin_cnt == 2:
-        break
+temp = Counter(arr).most_common()
+if len(arr) > 1:
+    if temp[0][1] == temp[1][1]:
+        print(temp[1][0])
+    else:
+        print(temp[0][0])
+else:
+    print(temp[0][0])
 
-
-print(round(sum/N))
-print(do_math[N//2])
-print(bindo)
-print(do_math[-1] - do_math[0])
+print(max(arr) - min(arr))
