@@ -4,12 +4,9 @@ list_seon = []
 for _ in range(K):
     list_seon.append(int(input()))
 
-print(list_seon)
+front, back = 1, max(list_seon)
 
-front, back = 0, 2147483647
-
-max = 0
-while front != (front + back) // 2:
+while front <= back:
 
     sum_seon = 0
     mid = (front + back) // 2
@@ -17,11 +14,9 @@ while front != (front + back) // 2:
     for i in list_seon:
         sum_seon += i // mid
 
-    if sum_seon < N:
-        back = mid
+    if sum_seon >= N:
+        front = mid + 1
     else :
-        if mid > max:
-            max = mid
-        front = mid
+        back = mid - 1
 
-print(max)
+print(back)
