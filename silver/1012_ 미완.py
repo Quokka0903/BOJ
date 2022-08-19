@@ -1,48 +1,50 @@
-import sys
-
-sys.setrecursionlimit(10 ** 8)
-
-def dfs(x: int, y: int):
-    # 배추가 아님
-    if x < 0 or x >= N or \
-        y < 0 or y >= M :
-        return False
-    
-    # 배추임
-    if graph[x][y] == 1:
-        graph[x][y] = 0 # 방문
-
-        dfs(x, y + 1) # 상
-        dfs(x, y - 1) # 하
-        dfs(x - 1, y) # 좌
-        dfs(x + 1, y) # 우 
-
-        return True
-    
-    return False
-
+def my_dfs(s, nodes):
+    visited = [[0] * M for _ in range(N)]
+    stack = []
+    while True:
+        for w in nodes[s]:
+            if visited[w] == 0:
+                visited[w] = 1
+                stack.append(s)
+                s = w
+                break
+        else:
+            if stack:
+                s = stack.pop()
+            else:
+                break
 
 
 T = int(input())
-result = []
 
-for i in range(T) :
-    M, N, K =  map(int, sys.stdin.readline().split())
-    graph = [[0] * M for i in range(N)] # 0 으로 초기화
+for _ in range(T):
+    M, N, K = map(int, input().split())
+
+    ddang = [[0] * M for _ in range(N)]
+    dfs = [[] for _ in range(M * N)]
 
     for _ in range(K):
-        y, x = map(int, sys.stdin.readline().split())
-        graph[x][y] = 1 # 배추 있는곳 1
+        x, y = map(int, input().split())
+        ddang[y][x] = 1
     
-    count = 0
+    dx = [0, 0, 1, -1]
+    dy = [1, -1, 0, 0]
 
-    for i in range(N):
-        for j in range(M):
-            if graph[i][j] == 1:
-                if dfs(i, j):
-                    count += 1
+    for y in range(N):
+        for x in range(M):
+            for k in range(4):
+                if y + dy[k] < 0 or x + dx[k] < 0 or y + dy[k] >= N or x + dx[k] >= M:
+                    continue
 
-    result.append(count)
+                if ddang[y][x] == 1 and ddang[y + dy[k]][x + dx[k]] == 1:
+                    dfs[y * N + x].append((y + dy[k]) * N + (x + dx[k]))
+                    dfs[(y + dy[k] * N) + (x + dx[k])].append(y * N + x)
 
-for n in result:
-    print(n)
+    unions = 
+    for i in range(M * N):
+        if dfs[i]:
+            my_dfs(i, dfs)
+            
+
+    print(ddang)
+    print(dfs)
