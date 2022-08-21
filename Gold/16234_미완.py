@@ -15,12 +15,6 @@ def my_df (s, nodes, union, border, ddang):
                 unions[border[w] - 1] += ddang[w]
                 union_cnt[border[w] - 1] += 1
                 s = w
-
-                #print(unions)
-                #print(union_cnt)
-                #print(border)
-                #print(ddang)
-                #print(dfs)
                 break
         else:
             if stack:
@@ -37,8 +31,6 @@ for _ in range(N):
     temp = list(map(int, input().split()))
     sum_ingu += sum(temp)
     ddang.extend(temp)
-
-print(ddang)
 
 dx = [1, -1, 0, 0]
 dy = [0, 0, -1, 1]
@@ -67,14 +59,7 @@ while True:
                 union += 1
                 unions.append(0)
                 union_cnt.append(0)
-    
-    #print(unions)
-    #print(union_cnt)
-    #print(border)
-    #print(ddang)
-    #print(dfs)
-
-
+                
     if union_cnt[0] == 0: 
         break
 
