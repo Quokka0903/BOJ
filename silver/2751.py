@@ -1,10 +1,11 @@
 import sys
-input = sys.stdin.readline()
 
 T = int(input())
-ans = set()
+ans = []
 for _ in range(T) :
-    ans.add(int(input()))
+    ans.append(int(sys.stdin.readline()))
+
+ans.sort()
 
 for i in ans :
     print (i)
