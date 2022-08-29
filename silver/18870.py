@@ -7,14 +7,10 @@ T = int(input())
 test = list(map(int, input().split()))
 sets = sorted(set(test))
 dic = {}
-for i in sets:
-    if i not in dic:
-        dic[i] = 0
-
-for w in dic:
-    for v in dic:
-        if w > v:
-            dic[w] += 1
+i = 0
+for w in sets:
+    dic[w] = i
+    i += 1
 
 for i in test:
     print(dic[i], end=' ')
