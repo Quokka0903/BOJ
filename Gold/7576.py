@@ -24,8 +24,6 @@ while ik:
                 tomato[sy + dy][sx + dx] = tomato[sy][sx] + 1
                 ik.append((sy + dy, sx + dx))
 
-print(tomato)
-
 ans = -1
 for y in range(N):
     if 0 in tomato[y]:
@@ -36,4 +34,4 @@ for y in range(N):
             ans = tomato[y][x]
 
 else:
-    print(ans)
+    print(ans - 1)
