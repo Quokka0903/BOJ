@@ -8,8 +8,6 @@ for _ in range(M):
     chingu[a].append(b)
     chingu[b].append(a)
 
-print(chingu)
-
 min_hap = N * N
 ans = 0
 for i in range(1, N + 1):
@@ -24,7 +22,6 @@ for i in range(1, N + 1):
                 visited[unit] = cnt + 1
                 stack.append([unit, cnt + 1])
 
-    print(visited)
     if min_hap > sum(visited):
         min_hap = sum(visited)
         ans = i
