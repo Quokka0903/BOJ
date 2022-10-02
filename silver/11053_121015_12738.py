@@ -26,3 +26,5 @@ for i in range(1, n):
 
 print(len(result))
 print(*result)
+
+#활용해서 14002, 14003 도전해볼것
