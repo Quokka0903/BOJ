@@ -12,6 +12,6 @@ for i in range(N):
             res[j] = max(stack[j - 1], stack[j]) + sam[j]
         else:
             res[j] = stack[j] + sam[j]
-            
+
     res, stack = stack, res
-    print(stack)
+print(max(stack))
