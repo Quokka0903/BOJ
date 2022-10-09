@@ -1,4 +1,4 @@
-import sys, collections
+import sys, heapq
 input = sys.stdin.readline
 
 V, E = map(int, input().split())
@@ -8,21 +8,24 @@ nodes = [[] for _ in range(V + 1)]
 
 for _ in range(E):
     n1, n2, val = map(int, input().split())
-    nodes[n1].append([n2, val])
-visited = [-1] * (V + 1)
+    nodes[n1].append([val, n2])
+visited = [10**6] * (V + 1)
 
-stack = collections.deque([K])
+hq = [[0, K]]
 visited[K] = 0
-while stack:
-    s = stack.popleft()
+while hq:
+    w, s = heapq.heappop(hq)
 
-    for node, val in nodes[s]:
-        if visited[node] == -1 or visited[s] + val < visited[node]:
+    if visited[s] < w:
+        continue
+
+    for val, node in nodes[s]:
+        if visited[s] + val < visited[node]:
             visited[node] = visited[s] + val
-            stack.append(node)
+            heapq.heappush(hq, [visited[s] + val, node])
 
 for i in range(1, V + 1):
-    if visited[i] == -1:
+    if visited[i] == 10**6:
         print('INF')
     else:
         print(visited[i])
