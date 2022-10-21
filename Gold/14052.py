@@ -1,49 +1,72 @@
-import sys
-import copy
-from collections import deque
-
+import sys, collections
 input = sys.stdin.readline
-
-dx = [0,0,-1,1]
-dy = [1,-1,0,0]
 
 N, M = map(int, input().split())
 zido = [list(map(int, input().split())) for _ in range(N)]
-ans = 0
-q = deque()
 
-def bfs():
-    global ans
-    w = copy.deepcopy(zido)
-    for i in range(N):
-        for j in range(M):
-            if w[i][j]==2:
-                q.append([i,j])
+max_bang = 0
+min_virus = N * M
+for y1 in range(N):
+    for x1 in range(M):
+        if zido[y1][x1] == 0:
+            zido[y1][x1] = 1
+        
+            for y2 in range(y1, N):
+                for x2 in range(M):
+                    if zido[y2][x2] == 0:
+                        zido[y2][x2] = 1
 
-    while q:
-        x, y = q.popleft()
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if 0 <= nx < N and 0 <= ny < M:
-                if w[nx][ny]==0:
-                    w[nx][ny] = 2
-                    q.append([nx,ny])
-    cnt = 0
-    for i in w:
-        cnt += i.count(0)
-    ans = max(ans,cnt)
+                        for y3 in range(y2, N):
+                            for x3 in range(M):
+                                if zido[y3][x3] == 0:
+                                    zido[y3][x3] = 1
+                                    
+                                    stack = collections.deque([])
+                                    virus = 0
+                                    for y in range(N):
+                                        for x in range(M):
+                                            if zido[y][x] == 2:
+                                                stack.append([y, x])
+                                                virus += 1
 
-def byeok(x):
-    if x == 3:
-        bfs()
-        return
-    for i in range(N):
-        for j in range(M):
-            if zido[i][j]==0:
-                zido[i][j]=1
-                byeok(x + 1)
-                zido[i][j]=0
+                                    temp_zido = []
+                                    for unit in zido:
+                                        temp_zido.append(unit[:])
 
-byeok(0)
-print(ans)
+                                    #print(temp_zido)
+
+                                    def check(stack, min_virus, cnt, virus):
+                                        while stack:
+                                            y, x = stack.popleft()
+                                            for dy, dx in [[0, 1], [0, -1], [1, 0], [-1, 0]]:
+                                                sy, sx = y + dy, x + dx
+                                                if 0 <= sy < N and 0 <= sx < M:
+                                                    if temp_zido[sy][sx] == 0:
+                                                        temp_zido[sy][sx] = 2
+                                                        virus += 1
+                                                        
+                                                        if virus > min_virus:
+                                                            return -1
+
+                                                        stack.append([sy, sx])
+
+                                        for y in range(N):
+                                            for x in range(M):
+                                                if temp_zido[y][x] == 0:
+                                                    cnt += 1
+
+                                        return cnt
+                                    #print(temp_zido, cnt)
+
+                                    cnt = check(stack, min_virus, 0, virus)
+                                    if max_bang < cnt:
+                                        max_bang = cnt
+
+                                    zido[y3][x3] = 0
+
+                        zido[y2][x2] = 0
+
+            zido[y1][x1] = 0
+
+
+print(max_bang)
