@@ -1,4 +1,3 @@
-from pprint import pprint
 import sys
 sys.stdin.readline
 
@@ -13,5 +12,4 @@ for a in range(len(s2)):
         else:
             dp[a + 1][b + 1] = max(dp[a + 1][b], dp[a][b + 1])
 
-pprint(dp)
 print(dp[-1][-1])
