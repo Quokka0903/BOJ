@@ -11,19 +11,25 @@ else :
     flag = 0
     time = 0
     while N > 1:
-        time += snow[1] - snow[-1]
+        while not snow[-1]:
+            snow.pop()
+            N -= 1
+        if N <= 1:
+            break
+
+        time += 1
+        snow[0] -= 1
+        snow[1] -= 1
+        
         if time > 1440:
             flag = 1
             break
 
-        snow[0] -= (snow[1] - snow[-1])
-        snow[1] = snow[-1]
-
         if not snow[1]:
             snow = sorted([snow[0]] + snow[2:], reverse=True)
+            N -= 1
         else:
             snow.sort(reverse=True)
-        N -= 1
 
     if flag:
         print(-1)
